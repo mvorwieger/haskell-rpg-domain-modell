@@ -18,26 +18,23 @@ makeLenses ''Player
 
 newtype Money = Money { unMoney :: Double } deriving (Show, Eq, Num)
 
-{-
-attack :: Unit -> Int -> Unit
-attack u damageTaken = Unit { attackDamage = (attackDamage u)
-                            , health       = (health u - damageTaken)
-                            }
+attack :: Int -> Unit -> Unit
+attack damageTaken = health +~ damageTaken 
 
 type Attacker = Unit
 type Defender = Unit
 battle :: Attacker -> Defender -> (Attacker, Defender)
 battle u1 u2 = (attacker, defender)
     where 
-        attacker = attack u1 (attackDamage u2)
-        defender = attack u2 (attackDamage u1)
+        attacker = attack (u2 ^. attackDamage) u1
+        defender = attack (u1 ^. attackDamage) u2
+
 emptyWallet :: Money
 emptyWallet = Money { unMoney = 0 }
 
 
-u1 = Unit {attackDamage = 10, health = 200}
-u2 = Unit {attackDamage = 20, health = 100}
+u1 = Unit {_attackDamage = 10, _health = 200}
+u2 = Unit {_attackDamage = 20, _health = 100}
 
-p1 = Player { name = "Michel", stats = u1, money = emptyWallet }
-p2 = Player { name = "Robin", stats = u2, money = emptyWallet }
--}
+p1 = Player { _name = "Michel", _stats = u1}
+p2 = Player { _name = "Robin", _stats = u2}
