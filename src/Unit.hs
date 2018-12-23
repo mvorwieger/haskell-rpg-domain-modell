@@ -1,21 +1,23 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE TemplateHaskell #-}
 
-module Project where
+module Unit where
 
 import Data.Text (Text)
 import Control.Lens
+import Money 
+import Item 
 
-newtype Money = Money { unMoney :: Double } deriving (Show, Eq, Num)
 
 data Unit = Unit { _health :: Int
                  , _attackDamage :: Int 
                  } deriving (Show, Eq)
 makeLenses ''Unit
 
-data Player = Player { _name :: String
-                     , _stats :: Unit
-                     , _money :: Money
+data Player = Player { _name        :: String
+                     , _stats       :: Unit
+                     , _money       :: Money
+                     , _inventory   :: [Item]
                      } deriving (Show, Eq)
 makeLenses ''Player
 
@@ -36,5 +38,5 @@ emptyWallet = Money { unMoney = 0 }
 u1 = Unit {_attackDamage = 10, _health = 200}
 u2 = Unit {_attackDamage = 20, _health = 100}
 
-p1 = Player { _name = "Michel", _stats = u1, _money = emptyWallet}
-p2 = Player { _name = "Robin", _stats = u2, _money = emptyWallet}
+p1 = Player { _name = "Michel", _stats = u1, _money = emptyWallet, _inventory = []}
+p2 = Player { _name = "Robin", _stats = u2, _money = emptyWallet, _inventory = []}

@@ -1,7 +1,9 @@
 module Main where
 
 import Lib
-import Project
+import Unit
+import Money
+import Item
 
 main :: IO ()
 main = someFunc
